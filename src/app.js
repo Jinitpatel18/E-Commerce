@@ -22,6 +22,13 @@ app.use(cors({
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+app.get("/", (req, res) => {
+    res.status(200).json({
+        message: "J&M E-Commerce API is running! 🚀",
+        version: "1.0.0"
+    })
+})
+
 app.use(limiter);
 app.use(errorMiddleware);
 
