@@ -1,0 +1,35 @@
+import helmet from 'helmet';
+import rateLimit from 'express-rate-limit';
+import cors from 'cors';
+import express from 'express';
+import { errorMiddleware } from './Utils/errorMiddleware.js';
+import ProductRoutes from './Routes/product.routes.js'
+import authRoutes from './Routes/auth.routes.js'
+import { limiter } from './Utils/rateLimits.js';
+import cartRoutes from './Routes/cart.routes.js';
+import orderRoutes from './Routes/order.routes.js';
+import wishListRoutes from './Routes/wishList.routes.js';
+import paymentRoutes from './Routes/razorpay.routes.js';
+
+const app = express();
+
+app.use(helmet());
+app.use(cors({
+    origin: process.env.CORS_ORIGIN || 'http://localhost:5173',
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH']
+}))
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+app.use(limiter);
+app.use(errorMiddleware);
+
+app.use('/api/v1/products', ProductRoutes)
+app.use('/api/v1/users', authRoutes)
+app.use('/api/v1/carts', cartRoutes)
+app.use('/api/v1/orders', orderRoutes)
+app.use('/api/v1/wish-list', wishListRoutes)
+app.use('/api/v1/payment', paymentRoutes)
+
+export default app;
