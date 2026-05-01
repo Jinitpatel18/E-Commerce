@@ -20,6 +20,7 @@ app.use(cors({
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH']
 }))
+app.use(limiter);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -30,14 +31,13 @@ app.get("/", (req, res) => {
     })
 })
 
-app.use(limiter);
-app.use(errorMiddleware);
 
 app.use('/api/v1/products', ProductRoutes)
 app.use('/api/v1/users', authRoutes)
-app.use('/api/v1/carts', cartRoutes)
+app.use('/api/v1/cart', cartRoutes)
 app.use('/api/v1/orders', orderRoutes)
 app.use('/api/v1/wish-list', wishListRoutes)
 app.use('/api/v1/payment', paymentRoutes)
 
+app.use(errorMiddleware);
 export default app;
