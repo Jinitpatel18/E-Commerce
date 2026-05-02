@@ -12,7 +12,7 @@ import wishListRoutes from './Routes/wishList.routes.js';
 import paymentRoutes from './Routes/razorpay.routes.js';
 
 const app = express();
-
+app.set('trust proxy', 1)
 app.use(helmet());
 app.use(cors({
     origin: ['http://localhost:5173',
