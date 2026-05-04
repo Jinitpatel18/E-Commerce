@@ -21,7 +21,7 @@ const createRazorpayOrder = asyncHandler(async (req, res) => {
     }
 
     const razorpayOrder = await razorpay.orders.create({
-        amount: order.totalPrice,
+        amount: order.totalPrice * 100,
         currency: "INR",
         receipt: `order_${orderId}`
     })
